@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | MOFIXA</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+
+        <a class="logo" href="index.html#top" aria-label="MOFIXA home"><span class="logo-icon">⌁</span><span>MOFIXA</span></a>
+
+        <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-navigation">Menu</button>
+
+        <nav class="site-navigation" id="site-navigation">
+            <a href="index.html#top">Home</a>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#shop">Shop</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#contact">Contact</a>
+            <a href="cart.html">
+                Cart (<span id="cart-count">0</span>)
+            </a>
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <section class="cart-section">
+
+            <h1>Your Shopping Cart</h1>
+
+            <div id="cart-container" aria-live="polite">
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 MOFIXA. All rights reserved.</p>
+    </footer>
+
+
+    <script src="products.js"></script>
+    <script src="cart.js"></script>
+    <script src="cart-page.js"></script>
+    <script src="nav.js"></script>
+
+    
+</body>
+
+</html>
