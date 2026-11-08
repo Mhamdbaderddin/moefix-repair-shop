@@ -420,8 +420,16 @@ button:disabled {
 }
 
 .service-icon {
-    font-size: 1.6rem;
-    margin-bottom: 0.75rem;
+    display: inline-grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    margin-bottom: 0.85rem;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 1.15rem;
+    box-shadow: inset 0 0 0 1px rgba(0, 212, 200, 0.28);
 }
 
 .service-card h3 {
@@ -434,12 +442,11 @@ button:disabled {
     font-size: 0.95rem;
 }
 
-/* ========== Shop / Products ========== */
-
-.products-section > p {
-    margin-top: -0.5rem;
-    margin-bottom: 1.5rem;
+.section-cta {
+    margin-top: 1.75rem;
 }
+
+/* ========== Shop / Products ========== */
 
 .shop-controls {
     display: grid;
@@ -616,9 +623,27 @@ button:disabled {
     border-bottom: 1px solid var(--border);
 }
 
-.about-section p {
-    max-width: 42rem;
+.about-points {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.1rem;
+}
+
+.about-point {
+    padding: 1.25rem 1.15rem;
+    background: linear-gradient(180deg, var(--bg-elevated), var(--bg-soft));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.about-point h3 {
+    color: var(--text);
     font-size: 1.05rem;
+}
+
+.about-point p {
+    margin: 0;
+    font-size: 0.95rem;
 }
 
 /* ========== Contact ========== */
@@ -860,23 +885,105 @@ button:disabled {
 
 /* ========== Footer ========== */
 
-footer {
+.site-footer {
     margin-top: 2rem;
-    padding: 1.5rem clamp(1rem, 4vw, 2.5rem);
+    padding: 2rem clamp(1rem, 4vw, 2.5rem) 1.5rem;
     border-top: 1px solid var(--border);
-    text-align: center;
     color: var(--text-muted);
     background: rgba(8, 10, 14, 0.7);
 }
 
-footer p {
+.footer-grid {
+    width: min(100%, var(--max-width));
+    margin: 0 auto 1.5rem;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.footer-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.65rem;
+}
+
+.footer-brand:hover {
+    color: var(--text);
+}
+
+.footer-brand .logo-mark {
+    width: 1.85rem;
+    height: 1.85rem;
+}
+
+.site-footer h3 {
+    color: var(--text);
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+}
+
+.site-footer ul {
+    list-style: none;
     margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.45rem;
+}
+
+.site-footer a {
+    color: var(--text-muted);
+}
+
+.site-footer a:hover {
+    color: var(--accent);
+}
+
+.footer-copy {
+    width: min(100%, var(--max-width));
+    margin: 0 auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.footer-copy p {
+    margin: 0;
+}
+
+/* Floating repair CTA */
+.repair-fab {
+    position: fixed;
+    right: 1.1rem;
+    bottom: 1.1rem;
+    z-index: 120;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.85rem 1.15rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #042422;
+    font-weight: 800;
+    box-shadow: var(--shadow);
+    border: 0;
+}
+
+.repair-fab:hover {
+    color: #021716;
+    background: var(--accent-strong);
 }
 
 /* ========== Responsive ========== */
 
 @media (max-width: 960px) {
-    .services {
+    .services,
+    .about-points {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
@@ -884,7 +991,8 @@ footer p {
         grid-template-columns: 1fr 1fr;
     }
 
-    .contact-info {
+    .contact-info,
+    .footer-grid {
         grid-template-columns: 1fr;
     }
 
@@ -931,8 +1039,21 @@ footer p {
     }
 
     .services,
+    .about-points,
     .products {
         grid-template-columns: 1fr;
+    }
+
+    .repair-fab span {
+        display: none;
+    }
+
+    .repair-fab {
+        width: 3.25rem;
+        height: 3.25rem;
+        justify-content: center;
+        padding: 0;
+        border-radius: 999px;
     }
 
     .shop-controls {

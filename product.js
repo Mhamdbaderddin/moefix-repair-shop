@@ -10,6 +10,8 @@ const productDetails = document.getElementById("product-details");
 
 if (!product) {
 
+    document.title = `Product Not Found | ${MOFIXA.businessName}`;
+
     productDetails.innerHTML = `
         <div class="product-info">
 
@@ -29,6 +31,8 @@ if (!product) {
 
 } else {
 
+    document.title = `${product.brand} ${product.name} | ${MOFIXA.businessName}`;
+
     let specificationsHTML = "";
 
     for (const key in product.specifications) {
@@ -42,17 +46,17 @@ if (!product) {
     }
 
     productDetails.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
+        <img src="${product.image}" alt="${product.brand} ${product.name}">
 
         <div class="product-info">
 
-            <h1>${product.name}</h1>
+            <p class="product-brand">${product.brand}</p>
 
-            <p>Brand: ${product.brand}</p>
+            <h1>${product.name}</h1>
 
             <p>${product.description}</p>
 
-            <h2 class="product-detail-price">$${product.price}</h2>
+            <h2 class="product-detail-price">${MOFIXA.formatPrice(product.price)}</h2>
 
             <p class="stock-status ${product.stock > 0 ? "in-stock" : "out-of-stock"}">
                 ${product.stock > 0
