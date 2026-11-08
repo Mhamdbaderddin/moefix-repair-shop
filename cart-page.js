@@ -54,7 +54,8 @@ function displayCart() {
 
             <img
                 src="${product.image}"
-                alt="${product.name}"
+                alt="${product.brand} ${product.name}"
+                loading="lazy"
             >
 
             <div class="cart-item-info">
@@ -63,7 +64,7 @@ function displayCart() {
 
                 <p>Brand: ${product.brand}</p>
 
-                <p>$${product.price} each</p>
+                <p>${MOFIXA.formatPrice(product.price)} each</p>
 
 
                 <div class="quantity-controls">
@@ -94,7 +95,7 @@ function displayCart() {
 
             <div class="cart-item-total">
 
-                <strong>$${itemTotal}</strong>
+                <strong>${MOFIXA.formatPrice(itemTotal)}</strong>
 
             </div>
 
@@ -116,21 +117,19 @@ function displayCart() {
         if (!product) {
             return null;
         }
-        return `${cartItem.quantity}x ${product.name} ($${product.price})`;
+        return `${cartItem.quantity}x ${product.name} (${MOFIXA.formatPrice(product.price)})`;
     }).filter(Boolean);
 
-    // TODO: Replace 96100000000 with the real MOFIXA WhatsApp number
-    const whatsappMessage = encodeURIComponent(
-        `Hi MOFIXA, I'd like to order:\n${orderLines.join("\n")}\nTotal: $${total}`
-    );
+    const whatsappMessage =
+        `Hi MOFIXA, I'd like to order:\n${orderLines.join("\n")}\nTotal: ${MOFIXA.formatPrice(total)}`;
 
     totalElement.innerHTML = `
 
-        <h2>Total: $${total}</h2>
+        <h2>Total: ${MOFIXA.formatPrice(total)}</h2>
 
         <p>Online checkout is not connected yet. Send your order on WhatsApp and we will confirm availability.</p>
         <a
-            href="https://wa.me/96100000000?text=${whatsappMessage}"
+            href="${MOFIXA.whatsappUrl(whatsappMessage)}"
             class="button"
             target="_blank"
             rel="noopener noreferrer"
@@ -184,7 +183,7 @@ function changeQuantity(productId, change) {
     updateCartCount();
 
     displayCart();
-}   
+}
 
 
 function removeFromCart(productId) {
