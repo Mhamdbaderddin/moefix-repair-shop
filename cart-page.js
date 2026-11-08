@@ -111,12 +111,32 @@ function displayCart() {
     totalElement.classList.add("cart-total");
 
 
+    const orderLines = cart.map(cartItem => {
+        const product = products.find(item => item.id === cartItem.id);
+        if (!product) {
+            return null;
+        }
+        return `${cartItem.quantity}x ${product.name} ($${product.price})`;
+    }).filter(Boolean);
+
+    // TODO: Replace 96100000000 with the real MOFIXA WhatsApp number
+    const whatsappMessage = encodeURIComponent(
+        `Hi MOFIXA, I'd like to order:\n${orderLines.join("\n")}\nTotal: $${total}`
+    );
+
     totalElement.innerHTML = `
 
         <h2>Total: $${total}</h2>
 
-        <p>Checkout is not connected yet.</p>
-        <a href="index.html#contact" class="button">Contact MOFIXA to order</a>
+        <p>Online checkout is not connected yet. Send your order on WhatsApp and we will confirm availability.</p>
+        <a
+            href="https://wa.me/96100000000?text=${whatsappMessage}"
+            class="button"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Order via WhatsApp
+        </a>
 
     `;
 

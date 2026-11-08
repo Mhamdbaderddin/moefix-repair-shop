@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="MOFIXA provides computer repair, upgrades, and quality computers in Lebanon.">
     <title>MOFIXA | Computer Repair & Shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
@@ -40,7 +43,7 @@
         <!-- Slide 1 -->
         <div class="hero-slide active">
 
-            <img src="images_R/BUILD.jpg" alt="Gaming PC">
+            <img src="images/build.jpg" alt="Custom-built gaming PC">
 
             <div class="hero-slide-overlay"></div>
 
@@ -79,7 +82,7 @@
         <!-- Slide 2 -->
         <div class="hero-slide">
 
-            <img src="images_R/OFFICE.jpg" alt="Laptop for Sale">
+            <img src="images/office-laptop.jpg" alt="Laptop for work and study">
 
             <div class="hero-slide-overlay"></div>
 
@@ -118,7 +121,7 @@
         <!-- Slide 3 -->
         <div class="hero-slide">
 
-            <img src="images_R/gamingSet.jpg" alt="Desktop PC">
+            <img src="images/gaming-setup.jpg" alt="Desktop gaming setup">
 
             <div class="hero-slide-overlay"></div>
 
@@ -155,23 +158,23 @@
 
 
         <!-- Previous / Next -->
-        <button class="slider-button slider-prev">
+        <button class="slider-button slider-prev" type="button" aria-label="Previous slide">
             &#10094;
         </button>
 
-        <button class="slider-button slider-next">
+        <button class="slider-button slider-next" type="button" aria-label="Next slide">
             &#10095;
         </button>
 
 
         <!-- Dots -->
-        <div class="slider-dots">
+        <div class="slider-dots" role="tablist" aria-label="Hero slides">
 
-            <button class="slider-dot active"></button>
+            <button class="slider-dot active" type="button" aria-label="Slide 1"></button>
 
-            <button class="slider-dot"></button>
+            <button class="slider-dot" type="button" aria-label="Slide 2"></button>
 
-            <button class="slider-dot"></button>
+            <button class="slider-dot" type="button" aria-label="Slide 3"></button>
 
         </div>
 
@@ -388,8 +391,19 @@
                     Send Message
                 </button>
 
-                <a href="#contact-details" class="button">
-                    WhatsApp details coming soon
+                <!-- TODO: Replace +96100000000 with the real MOFIXA WhatsApp number -->
+                <a
+                    href="https://wa.me/96100000000?text=Hi%20MOFIXA%2C%20I%20need%20help%20with%20a%20computer."
+                    class="button"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Chat on WhatsApp
+                </a>
+
+                <!-- TODO: Replace hello@mofixa.lb with the real MOFIXA email -->
+                <a href="mailto:hello@mofixa.lb?subject=MOFIXA%20inquiry" class="button">
+                    Email Us
                 </a>
 
             </div>
@@ -411,8 +425,9 @@
 
 
         <div id="contact-details" class="contact-info">
-            <p><strong>Phone</strong><br>To be added</p>
-            <p><strong>Email</strong><br>To be added</p>
+            <!-- TODO: Replace placeholder phone/email with real MOFIXA contact details -->
+            <p><strong>WhatsApp / Phone</strong><br><a href="https://wa.me/96100000000" target="_blank" rel="noopener noreferrer">+961 00 000 000</a></p>
+            <p><strong>Email</strong><br><a href="mailto:hello@mofixa.lb">hello@mofixa.lb</a></p>
             <p><strong>Location</strong><br>Lebanon</p>
         </div>
 
@@ -429,6 +444,7 @@
     <script src="products.js"></script>
     <script src="cart.js"></script>
     <script src="script.js"></script>
+    <script src="nav.js"></script>
 
 
 

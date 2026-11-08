@@ -393,26 +393,6 @@ dots.forEach((dot, index) => {
 
 setInterval(nextSlide, 4000);
 
-// Mobile navigation
-const menuButton = document.querySelector(".menu-button");
-const siteNavigation = document.querySelector(".site-navigation");
-
-if (menuButton && siteNavigation) {
-    menuButton.addEventListener("click", () => {
-        const isOpen = siteNavigation.classList.toggle("is-open");
-        menuButton.setAttribute("aria-expanded", isOpen);
-        menuButton.textContent = isOpen ? "Close" : "Menu";
-    });
-
-    siteNavigation.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", () => {
-            siteNavigation.classList.remove("is-open");
-            menuButton.setAttribute("aria-expanded", "false");
-            menuButton.textContent = "Menu";
-        });
-    });
-}
-
 // The form is intentionally honest until a sending service is connected.
 const contactForm = document.getElementById("contact-form");
 
@@ -420,6 +400,6 @@ if (contactForm) {
     contactForm.addEventListener("submit", event => {
         event.preventDefault();
         document.getElementById("contact-status").textContent =
-            "Message sending is not connected yet. Please add your phone or WhatsApp details first.";
+            "This contact form is not connected to a backend yet. Please reach us on WhatsApp or email instead.";
     });
 }
