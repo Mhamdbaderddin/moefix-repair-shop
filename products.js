@@ -5,7 +5,7 @@ const products = [
         name: "Gaming Laptop",
         price: 850,
         category: "Laptop",
-        image: "images_R/gaming lap.jpg",
+        image: "images/gaming-laptop.jpg",
         description: "Powerful laptop suitable for gaming, work, and everyday use.",
 
         stock: 2,
@@ -25,7 +25,7 @@ const products = [
         name: "256GB SSD",
         price: 40,
         category: "Storage",
-        image: "images_R/ssd.jpg",
+        image: "images/ssd.jpg",
         description: "Fast storage upgrade for laptops and desktop computers.",
 
         stock: 10,
@@ -45,7 +45,7 @@ const products = [
         name: "16GB Memory",
         price: 35,
         category: "RAM",
-        image: "images_R/ram.jpg",
+        image: "images/ram.jpg",
         description: "16GB memory module for compatible laptops and desktop PCs.",
 
         stock: 0,
@@ -64,7 +64,7 @@ const products = [
         name: "Business Laptop",
         price: 450,
         category: "Laptop",
-        image: "images_R/OFFICE.jpg",
+        image: "images/office-laptop.jpg",
         description: "Reliable laptop suitable for office work, studying, and everyday use.",
 
         stock: 1,
