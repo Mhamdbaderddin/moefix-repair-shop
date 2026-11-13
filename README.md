@@ -1,41 +1,45 @@
 # MOFIXA — Laptop & PC Repair Shop Website
 
-A responsive website for a laptop and PC repair and sales business.
+CSC 400 Phase 2 frontend (HTML, CSS, JavaScript) for a Lebanon-based laptop/PC repair + sales shop.
 
-## About the Project
+## Phase 2 pages (5+)
 
-MOFIXA is a personal web development project created for a laptop and PC repair business. The website is being developed to provide customers with information about repair services and available products.
+1. `index.html` — Home (nav, services, shop, about, contact, repair modal)
+2. `login.html` — Login with JavaScript validation
+3. `register.html` — Register with JavaScript validation
+4. `product.html` — Product details + add to cart
+5. `cart.html` — Cart + Order via WhatsApp
 
 ## Features
 
-- Repair services section
-- Product catalog
-- Product search
-- Product categories
-- Product sorting
-- Product details pages
-- Stock status
-- Shopping cart
-- Quantity controls
-- Responsive design
-- Mobile navigation
-- Contact and business information
+- Responsive layout and mobile nav
+- Hero slider, product search/filter/sort
+- Stock-aware cart (localStorage)
+- Login / register session (localStorage; Laravel comes in Phase 3)
+- JS form validation on login, register, contact, and repair modal
+- Book-a-repair modal + WhatsApp CTAs
 
-## Technologies
+## Run locally (VS / PC)
 
-- HTML5
-- CSS3
-- JavaScript
+```bash
+# from the project folder
+python -m http.server 8000
+```
 
-## Project Status
+Open `http://127.0.0.1:8000`  
+Or use VS Code / Cursor **Live Server** on `index.html`.
 
-🚧 **In Development**
+## Contact placeholders
 
-The website is actively being developed and improved.
+Edit `config.js` before go-live:
 
-## Future Improvements
+```js
+whatsappNumber: "961XXXXXXXX",
+phoneDisplay: "+961 X XXX XXX",
+email: "you@yourdomain.com",
+```
 
-- Additional products and categories
-- Further UI and responsive design improvements
-- Additional shopping functionality
-- More business features
+## Classroom submission
+
+Zip the frontend folder (HTML/CSS/JS/images). Do **not** include `.git`.  
+In the Google Classroom comment, include partner name, ID, and section.

@@ -35,18 +35,10 @@ function displayProducts(productsToDisplay) {
         card.classList.add("product-card");
 
 
-        // ========================================
-        // STOCK STATUS
-        // ========================================
-
         const stockStatus = product.stock > 0
             ? "In Stock"
             : "Out of Stock";
 
-
-        // ========================================
-        // PRODUCT CONDITION
-        // ========================================
 
         const condition =
             product.specifications?.Condition ||
@@ -54,17 +46,14 @@ function displayProducts(productsToDisplay) {
             "Used";
 
 
-        // ========================================
-        // PRODUCT CARD HTML
-        // ========================================
-
         card.innerHTML = `
 
             <div class="product-image">
 
                 <img
                     src="${product.image}"
-                    alt="${product.name}"
+                    alt="${product.brand} ${product.name}"
+                    loading="lazy"
                 >
 
             </div>
@@ -108,7 +97,7 @@ function displayProducts(productsToDisplay) {
 
 
                 <p class="product-price">
-                    $${product.price}
+                    ${MOFIXA.formatPrice(product.price)}
                 </p>
 
 
@@ -155,10 +144,6 @@ categories.forEach(category => {
 });
 
 
-// ========================================
-// INITIAL DISPLAY
-// ========================================
-
 displayProducts(products);
 
 
@@ -181,10 +166,6 @@ function filterProducts() {
     const selectedSort =
         sortSelect.value;
 
-
-    // ========================================
-    // FILTER PRODUCTS
-    // ========================================
 
     let filteredProducts = products.filter(product => {
 
@@ -221,10 +202,6 @@ function filterProducts() {
     });
 
 
-    // ========================================
-    // SORT PRODUCTS
-    // ========================================
-
     if (selectedSort === "price-low") {
 
         filteredProducts.sort(
@@ -251,15 +228,10 @@ function filterProducts() {
     }
 
 
-    // Display filtered products
     displayProducts(filteredProducts);
 
 }
 
-
-// ========================================
-// EVENT LISTENERS
-// ========================================
 
 searchInput.addEventListener(
     "input",
@@ -278,10 +250,6 @@ sortSelect.addEventListener(
     filterProducts
 );
 
-
-// ========================================
-// CLEAR FILTERS
-// ========================================
 
 clearFiltersButton.addEventListener(
     "click",
@@ -304,102 +272,282 @@ clearFiltersButton.addEventListener(
 // ========================================
 
 const slides = document.querySelectorAll(".hero-slide");
-
 const prevButton = document.querySelector(".slider-prev");
-
 const nextButton = document.querySelector(".slider-next");
-
 const dots = document.querySelectorAll(".slider-dot");
-
+const hero = document.querySelector(".hero");
 
 let currentSlide = 0;
-
-
-// Show a specific slide
+let autoplayId = null;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function showSlide(index) {
-
     slides.forEach(slide => {
         slide.classList.remove("active");
     });
 
     dots.forEach(dot => {
         dot.classList.remove("active");
+        dot.setAttribute("aria-selected", "false");
     });
 
-
     slides[index].classList.add("active");
-
     dots[index].classList.add("active");
-
+    dots[index].setAttribute("aria-selected", "true");
 
     currentSlide = index;
 }
 
-
-// Next slide
-
 function nextSlide() {
-
     let nextIndex = currentSlide + 1;
-
-
     if (nextIndex >= slides.length) {
         nextIndex = 0;
     }
-
-
     showSlide(nextIndex);
 }
 
-
-// Previous slide
-
 function previousSlide() {
-
     let previousIndex = currentSlide - 1;
-
-
     if (previousIndex < 0) {
         previousIndex = slides.length - 1;
     }
-
-
     showSlide(previousIndex);
 }
 
+function startAutoplay() {
+    if (prefersReducedMotion || autoplayId) return;
+    autoplayId = setInterval(nextSlide, 5000);
+}
 
-// Buttons
+function stopAutoplay() {
+    if (!autoplayId) return;
+    clearInterval(autoplayId);
+    autoplayId = null;
+}
 
-nextButton.addEventListener("click", nextSlide);
-
-prevButton.addEventListener("click", previousSlide);
-
-
-// Dots
-
-dots.forEach((dot, index) => {
-
-    dot.addEventListener("click", () => {
-
-        showSlide(index);
-
-    });
-
+nextButton.addEventListener("click", () => {
+    nextSlide();
+    stopAutoplay();
+    startAutoplay();
 });
 
+prevButton.addEventListener("click", () => {
+    previousSlide();
+    stopAutoplay();
+    startAutoplay();
+});
 
-// Automatic slideshow
+dots.forEach((dot, index) => {
+    dot.setAttribute("role", "tab");
+    dot.setAttribute("aria-selected", String(index === 0));
+    dot.addEventListener("click", () => {
+        showSlide(index);
+        stopAutoplay();
+        startAutoplay();
+    });
+});
 
-setInterval(nextSlide, 4000);
+if (hero) {
+    hero.addEventListener("mouseenter", stopAutoplay);
+    hero.addEventListener("mouseleave", startAutoplay);
+    hero.addEventListener("focusin", stopAutoplay);
+    hero.addEventListener("focusout", event => {
+        if (!hero.contains(event.relatedTarget)) {
+            startAutoplay();
+        }
+    });
+    hero.addEventListener("keydown", event => {
+        if (event.key === "ArrowRight") {
+            event.preventDefault();
+            nextSlide();
+        }
+        if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            previousSlide();
+        }
+    });
+}
 
-// The form is intentionally honest until a sending service is connected.
+startAutoplay();
+
+
+// ========================================
+// CONTACT LINKS + FORM → WhatsApp
+// ========================================
+
+function applyContactLinks() {
+    const defaultMessage = "Hi MOFIXA, I need help with a computer.";
+    const repairMessage = "Hi MOFIXA, I'd like to book a repair / diagnostic.";
+    const whatsappLink = document.getElementById("whatsapp-link");
+    const emailLink = document.getElementById("email-link");
+    const phoneDisplayLink = document.getElementById("phone-display-link");
+    const emailDisplayLink = document.getElementById("email-display-link");
+    const locationDisplay = document.getElementById("location-display");
+    const footerWhatsapp = document.getElementById("footer-whatsapp");
+    const footerEmail = document.getElementById("footer-email");
+    const repairFab = document.getElementById("repair-fab");
+    const servicesRepairCta = document.getElementById("services-repair-cta");
+
+    if (whatsappLink) {
+        whatsappLink.href = MOFIXA.whatsappUrl(defaultMessage);
+    }
+
+    if (emailLink) {
+        emailLink.href = MOFIXA.mailtoUrl();
+    }
+
+    if (phoneDisplayLink) {
+        phoneDisplayLink.href = MOFIXA.whatsappUrl();
+        phoneDisplayLink.textContent = MOFIXA.phoneDisplay;
+    }
+
+    if (emailDisplayLink) {
+        emailDisplayLink.href = MOFIXA.mailtoUrl();
+        emailDisplayLink.textContent = MOFIXA.email;
+    }
+
+    if (locationDisplay) {
+        locationDisplay.textContent = MOFIXA.location;
+    }
+
+    if (footerWhatsapp) {
+        footerWhatsapp.href = MOFIXA.whatsappUrl(defaultMessage);
+    }
+
+    if (footerEmail) {
+        footerEmail.href = MOFIXA.mailtoUrl();
+    }
+
+    if (repairFab) {
+        repairFab.href = MOFIXA.whatsappUrl(repairMessage);
+    }
+
+    if (servicesRepairCta) {
+        servicesRepairCta.href = MOFIXA.whatsappUrl(repairMessage);
+    }
+}
+
+applyContactLinks();
+
 const contactForm = document.getElementById("contact-form");
 
 if (contactForm) {
+    contactForm.setAttribute("novalidate", "novalidate");
+
     contactForm.addEventListener("submit", event => {
         event.preventDefault();
-        document.getElementById("contact-status").textContent =
-            "This contact form is not connected to a backend yet. Please reach us on WhatsApp or email instead.";
+
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const message = document.getElementById("message").value.trim();
+        const status = document.getElementById("contact-status");
+
+        Auth.clearFormErrors(["name", "email", "message"]);
+
+        const nameError = Auth.validateName(name);
+        const emailError = Auth.validateEmail(email);
+        const messageError = message ? "" : "Message is required.";
+
+        Auth.setFieldError("name", nameError);
+        Auth.setFieldError("email", emailError);
+        Auth.setFieldError("message", messageError);
+
+        if (nameError || emailError || messageError) {
+            status.textContent = "Please fix the errors above.";
+            return;
+        }
+
+        const composed = [
+            `Hi MOFIXA, my name is ${name.trim()}.`,
+            `Email: ${email.trim()}`,
+            "",
+            message
+        ].join("\n");
+
+        status.textContent = "Opening WhatsApp with your message…";
+        window.open(MOFIXA.whatsappUrl(composed), "_blank", "noopener,noreferrer");
+    });
+}
+
+
+// ========================================
+// REPAIR BOOKING MODAL
+// ========================================
+
+const repairModal = document.getElementById("repair-modal");
+const openRepairModal = document.getElementById("open-repair-modal");
+const closeRepairModal = document.getElementById("close-repair-modal");
+const repairModalForm = document.getElementById("repair-modal-form");
+
+function showRepairModal() {
+    if (!repairModal) return;
+    repairModal.hidden = false;
+    document.body.classList.add("modal-open");
+    document.getElementById("repair-device")?.focus();
+}
+
+function hideRepairModal() {
+    if (!repairModal) return;
+    repairModal.hidden = true;
+    document.body.classList.remove("modal-open");
+}
+
+if (openRepairModal) {
+    openRepairModal.addEventListener("click", showRepairModal);
+}
+
+if (closeRepairModal) {
+    closeRepairModal.addEventListener("click", hideRepairModal);
+}
+
+if (repairModal) {
+    repairModal.addEventListener("click", event => {
+        if (event.target === repairModal) {
+            hideRepairModal();
+        }
+    });
+}
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && repairModal && !repairModal.hidden) {
+        hideRepairModal();
+    }
+});
+
+if (repairModalForm) {
+    repairModalForm.addEventListener("submit", event => {
+        event.preventDefault();
+
+        const device = document.getElementById("repair-device").value.trim();
+        const issue = document.getElementById("repair-issue").value.trim();
+        const status = document.getElementById("repair-modal-status");
+
+        Auth.clearFormErrors(["repair-device", "repair-issue"]);
+
+        const deviceError = device ? "" : "Device is required.";
+        const issueError = issue ? "" : "Please describe the issue.";
+
+        Auth.setFieldError("repair-device", deviceError);
+        Auth.setFieldError("repair-issue", issueError);
+
+        if (deviceError || issueError) {
+            status.textContent = "Please fix the errors above.";
+            return;
+        }
+
+        const session = Auth.getSession();
+        const composed = [
+            "Hi MOFIXA, I'd like to book a repair.",
+            session ? `Name: ${session.name}` : null,
+            session ? `Email: ${session.email}` : null,
+            `Device: ${device}`,
+            `Issue: ${issue}`
+        ].filter(Boolean).join("\n");
+
+        status.textContent = "Opening WhatsApp…";
+        window.open(MOFIXA.whatsappUrl(composed), "_blank", "noopener,noreferrer");
+        hideRepairModal();
+        repairModalForm.reset();
+        status.textContent = "";
     });
 }
