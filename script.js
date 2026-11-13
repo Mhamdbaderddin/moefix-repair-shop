@@ -432,23 +432,122 @@ applyContactLinks();
 const contactForm = document.getElementById("contact-form");
 
 if (contactForm) {
+    contactForm.setAttribute("novalidate", "novalidate");
+
     contactForm.addEventListener("submit", event => {
         event.preventDefault();
 
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
         const message = document.getElementById("message").value.trim();
+        const status = document.getElementById("contact-status");
+
+        Auth.clearFormErrors(["name", "email", "message"]);
+
+        const nameError = Auth.validateName(name);
+        const emailError = Auth.validateEmail(email);
+        const messageError = message ? "" : "Message is required.";
+
+        Auth.setFieldError("name", nameError);
+        Auth.setFieldError("email", emailError);
+        Auth.setFieldError("message", messageError);
+
+        if (nameError || emailError || messageError) {
+            status.textContent = "Please fix the errors above.";
+            return;
+        }
 
         const composed = [
-            `Hi MOFIXA, my name is ${name}.`,
-            email ? `Email: ${email}` : null,
+            `Hi MOFIXA, my name is ${name.trim()}.`,
+            `Email: ${email.trim()}`,
             "",
             message
-        ].filter(line => line !== null).join("\n");
+        ].join("\n");
 
-        const status = document.getElementById("contact-status");
         status.textContent = "Opening WhatsApp with your message…";
-
         window.open(MOFIXA.whatsappUrl(composed), "_blank", "noopener,noreferrer");
+    });
+}
+
+
+// ========================================
+// REPAIR BOOKING MODAL
+// ========================================
+
+const repairModal = document.getElementById("repair-modal");
+const openRepairModal = document.getElementById("open-repair-modal");
+const closeRepairModal = document.getElementById("close-repair-modal");
+const repairModalForm = document.getElementById("repair-modal-form");
+
+function showRepairModal() {
+    if (!repairModal) return;
+    repairModal.hidden = false;
+    document.body.classList.add("modal-open");
+    document.getElementById("repair-device")?.focus();
+}
+
+function hideRepairModal() {
+    if (!repairModal) return;
+    repairModal.hidden = true;
+    document.body.classList.remove("modal-open");
+}
+
+if (openRepairModal) {
+    openRepairModal.addEventListener("click", showRepairModal);
+}
+
+if (closeRepairModal) {
+    closeRepairModal.addEventListener("click", hideRepairModal);
+}
+
+if (repairModal) {
+    repairModal.addEventListener("click", event => {
+        if (event.target === repairModal) {
+            hideRepairModal();
+        }
+    });
+}
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && repairModal && !repairModal.hidden) {
+        hideRepairModal();
+    }
+});
+
+if (repairModalForm) {
+    repairModalForm.addEventListener("submit", event => {
+        event.preventDefault();
+
+        const device = document.getElementById("repair-device").value.trim();
+        const issue = document.getElementById("repair-issue").value.trim();
+        const status = document.getElementById("repair-modal-status");
+
+        Auth.clearFormErrors(["repair-device", "repair-issue"]);
+
+        const deviceError = device ? "" : "Device is required.";
+        const issueError = issue ? "" : "Please describe the issue.";
+
+        Auth.setFieldError("repair-device", deviceError);
+        Auth.setFieldError("repair-issue", issueError);
+
+        if (deviceError || issueError) {
+            status.textContent = "Please fix the errors above.";
+            return;
+        }
+
+        const session = Auth.getSession();
+        const composed = [
+            "Hi MOFIXA, I'd like to book a repair.",
+            session ? `Name: ${session.name}` : null,
+            session ? `Email: ${session.email}` : null,
+            `Device: ${device}`,
+            `Issue: ${issue}`
+        ].filter(Boolean).join("\n");
+
+        status.textContent = "Opening WhatsApp…";
+        window.open(MOFIXA.whatsappUrl(composed), "_blank", "noopener,noreferrer");
+        hideRepairModal();
+        repairModalForm.reset();
+        status.textContent = "";
     });
 }

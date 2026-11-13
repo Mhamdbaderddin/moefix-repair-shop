@@ -1,46 +1,45 @@
 # MOFIXA — Laptop & PC Repair Shop Website
 
-Responsive static website for a Lebanon-based laptop and PC repair + sales shop.
+CSC 400 Phase 2 frontend (HTML, CSS, JavaScript) for a Lebanon-based laptop/PC repair + sales shop.
 
-**Live path:** open `index.html` locally, or enable GitHub Pages on this repo (Settings → Pages → Deploy from `main` / root).
+## Phase 2 pages (5+)
+
+1. `index.html` — Home (nav, services, shop, about, contact, repair modal)
+2. `login.html` — Login with JavaScript validation
+3. `register.html` — Register with JavaScript validation
+4. `product.html` — Product details + add to cart
+5. `cart.html` — Cart + Order via WhatsApp
 
 ## Features
 
-- Full-bleed hero slider with repair / shop CTAs
-- Services, about, and contact sections
-- Product catalog with search, category filter, and sorting
-- Product detail pages with stock-aware add-to-cart
-- Cart with quantity controls and **Order via WhatsApp**
-- Contact form that opens WhatsApp with a prefilled message
-- Floating **Book a repair** WhatsApp button
-- Mobile navigation and compressed product/hero images
+- Responsive layout and mobile nav
+- Hero slider, product search/filter/sort
+- Stock-aware cart (localStorage)
+- Login / register session (localStorage; Laravel comes in Phase 3)
+- JS form validation on login, register, contact, and repair modal
+- Book-a-repair modal + WhatsApp CTAs
 
-## Stack
-
-HTML5 · CSS3 · Vanilla JavaScript · Font Awesome · Google Fonts
-
-## Quick start
+## Run locally (VS / PC)
 
 ```bash
-# from the repo root
-python3 -m http.server 8000
-# then open http://127.0.0.1:8000
+# from the project folder
+python -m http.server 8000
 ```
 
-Or open `index.html` directly in a browser.
+Open `http://127.0.0.1:8000`  
+Or use VS Code / Cursor **Live Server** on `index.html`.
 
-## Before go-live — update contacts
+## Contact placeholders
 
-Edit **one file**: [`config.js`](config.js)
+Edit `config.js` before go-live:
 
 ```js
-whatsappNumber: "961XXXXXXXX",   // digits only, with country code
+whatsappNumber: "961XXXXXXXX",
 phoneDisplay: "+961 X XXX XXX",
 email: "you@yourdomain.com",
 ```
 
-Every WhatsApp / email / phone link on the site reads from there.
+## Classroom submission
 
-## Project status
-
-In active development. Next likely upgrades: real owner contacts, Arabic + LBP formatting, more inventory photos, and a real contact backend if WhatsApp-only is not enough.
+Zip the frontend folder (HTML/CSS/JS/images). Do **not** include `.git`.  
+In the Google Classroom comment, include partner name, ID, and section.

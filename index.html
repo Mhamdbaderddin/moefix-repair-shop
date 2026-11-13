@@ -39,6 +39,7 @@
             <a href="cart.html">
                 Cart (<span id="cart-count">0</span>)
             </a>
+            <span id="auth-nav" class="auth-nav"></span>
         </nav>
 
     </header>
@@ -262,8 +263,11 @@
         </div>
 
         <div class="section-cta">
-            <a id="services-repair-cta" class="button" href="#" target="_blank" rel="noopener noreferrer">
-                Book a repair on WhatsApp
+            <button type="button" class="button" id="open-repair-modal">
+                Book a repair
+            </button>
+            <a id="services-repair-cta" class="button secondary-button" href="#" target="_blank" rel="noopener noreferrer">
+                WhatsApp us
             </a>
         </div>
 
@@ -395,21 +399,24 @@
                 Name
             </label>
 
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" autocomplete="name">
+            <p class="field-error" id="name-error" aria-live="polite"></p>
 
 
             <label for="email">
                 Email
             </label>
 
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" autocomplete="email">
+            <p class="field-error" id="email-error" aria-live="polite"></p>
 
 
             <label for="message">
                 Message
             </label>
 
-            <textarea id="message" name="message" required></textarea>
+            <textarea id="message" name="message"></textarea>
+            <p class="field-error" id="message-error" aria-live="polite"></p>
 
 
             <div class="contact-buttons">
@@ -485,9 +492,31 @@
         <span>Book a repair</span>
     </a>
 
+    <div class="modal-overlay" id="repair-modal" hidden>
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="repair-modal-title">
+            <button type="button" class="modal-close" id="close-repair-modal" aria-label="Close dialog">&times;</button>
+            <p class="section-tag">REPAIR REQUEST</p>
+            <h2 id="repair-modal-title">Book a repair</h2>
+            <p>Tell us what device needs help. We will open WhatsApp with your details.</p>
+            <form id="repair-modal-form" novalidate>
+                <label for="repair-device">Device</label>
+                <input type="text" id="repair-device" name="device" placeholder="e.g. Lenovo laptop">
+                <p class="field-error" id="repair-device-error" aria-live="polite"></p>
+
+                <label for="repair-issue">Issue</label>
+                <textarea id="repair-issue" name="issue" placeholder="What is wrong?"></textarea>
+                <p class="field-error" id="repair-issue-error" aria-live="polite"></p>
+
+                <button type="submit">Continue on WhatsApp</button>
+                <p class="form-status" id="repair-modal-status" aria-live="polite"></p>
+            </form>
+        </div>
+    </div>
+
     <script src="config.js"></script>
     <script src="products.js"></script>
     <script src="cart.js"></script>
+    <script src="auth.js"></script>
     <script src="script.js"></script>
     <script src="nav.js"></script>
 
