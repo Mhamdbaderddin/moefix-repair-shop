@@ -123,8 +123,8 @@ const Auth = {
             document.getElementById("logout-button")?.addEventListener("click", () => this.logout());
         } else {
             slot.innerHTML = `
-                <a href="login.html">Login</a>
-                <a href="register.html">Register</a>
+                <a href="./login.html">Login</a>
+                <a href="./register.html">Register</a>
             `;
         }
     }
